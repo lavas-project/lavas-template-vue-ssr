@@ -11,7 +11,6 @@ import store from './store';
 import Icon from 'vue-awesome/components/Icon.vue';
 
 Vue.use(Vuetify);
-
 Vue.component('icon', Icon);
 
 Vue.config.productionTip = false;

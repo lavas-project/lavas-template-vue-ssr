@@ -6,7 +6,6 @@
 import { createApp } from './app';
 
 const isDev = process.env.NODE_ENV !== 'production';
-console.log(process.env.NODE_ENV);
 
 // This exported function will be called by `bundleRenderer`.
 // This is where we perform data-prefetching to determine the

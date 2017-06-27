@@ -3,12 +3,12 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-import Vue from 'vue';
 import 'babel-polyfill';
+import Vue from 'vue';
 import FastClick from 'fastclick';
-import { createApp } from './app';
-import VueTouch from 'vue-touch';
+import {createApp} from './app';
 import ProgressBar from '@/components/ProgressBar.vue';
+import VueTouch from 'vue-touch';
 
 // 基于hammer.js的手势库
 Vue.use(VueTouch);
@@ -19,7 +19,7 @@ document.body.appendChild(loading.$el);
 
 FastClick.attach(document.body);
 
-const { app, router, store } = createApp();
+const {app, router, store} = createApp();
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({

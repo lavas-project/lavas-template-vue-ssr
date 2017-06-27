@@ -24,14 +24,14 @@
             <!-- 头部 -->
             <div v-if="title" class="app-sidebar-title" @click.stop="close">
                 <span class="app-sidebar-title-left-icon">
-                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft"></img>
+                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft" />
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
                     <v-icon light v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>
                 </span>
                 <span>{{ title.text }}</span>
                 <slot name="logo" class="app-sidebar-title-right-logo">
                     <span class="app-sidebar-title-right-logo">
-                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight"></img>
+                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight" />
                         <icon v-else-if="title.svgRight" :name="title.svgRight"></icon>
                         <v-icon v-else-if="title.iconRight">{{ title.iconRight }}</v-icon>
                     </span>
@@ -47,7 +47,7 @@
                         <ul v-if="block.list">
                             <li v-for="item in block.list" @click.stop="closeAndGo(item.route)">
                                 <span v-if="item.icon || item.image || item.svg " class="app-sidebar-block-left-icon">
-                                    <img v-if="item.image" :src="item.image" :alt="item.alt"></img>
+                                    <img v-if="item.image" :src="item.image" :alt="item.alt" />
                                     <icon v-else-if="item.svg" :name="item.svg"></icon>
                                     <v-icon v-else-if="item.icon">{{ item.icon }}</v-icon>
                                 </span>
@@ -182,8 +182,10 @@ export default {
             }
         }
     },
-    activated() {
-        this.caclWidth();
+    created() {
+        if (process.env.VUE_ENV === 'client') {
+            this.caclWidth();
+        }
     }
 };
 </script>
