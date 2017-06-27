@@ -6,10 +6,12 @@
 import Vue from 'vue';
 import 'babel-polyfill';
 import FastClick from 'fastclick';
-import {createApp} from './app';
+import { createApp } from './app';
+import VueTouch from 'vue-touch';
 import ProgressBar from '@/components/ProgressBar.vue';
 
-import '@/assets/styles/global.styl';
+// 基于hammer.js的手势库
+Vue.use(VueTouch);
 
 // global progress bar
 const loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
@@ -17,7 +19,7 @@ document.body.appendChild(loading.$el);
 
 FastClick.attach(document.body);
 
-const {app, router, store} = createApp();
+const { app, router, store } = createApp();
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
@@ -39,37 +41,37 @@ Vue.mixin({
     }
 });
 
-// after async components have been resolved
-router.beforeResolve((to, from, next) => {
-    const matched = router.getMatchedComponents(to);
-    const prevMatched = router.getMatchedComponents(from);
+router.onReady(() => {
+    // after async components have been resolved
+    router.beforeResolve((to, from, next) => {
+        const matched = router.getMatchedComponents(to);
+        const prevMatched = router.getMatchedComponents(from);
 
-    let diffed = false;
-    const activated = matched.filter((c, i) => {
-        const ret = diffed || (diffed = (prevMatched[i] !== c));
-        return ret;
+        let diffed = false;
+        const activated = matched.filter((c, i) => {
+            const ret = diffed || (diffed = (prevMatched[i] !== c));
+            return ret;
+        });
+
+        if (!activated.length) {
+            return next();
+        }
+
+        loading.start();
+        Promise.all(activated.map(c => {
+            if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
+                return c.asyncData.call(c, {
+                    store,
+                    route: to
+                }).then(() => {
+                    c.asyncDataFetched = true;
+                });
+            }
+        })).then(() => {
+            loading.finish();
+            next();
+        }).catch(next);
     });
 
-    if (!activated.length) {
-        return next();
-    }
-
-    loading.start();
-    Promise.all(activated.map(c => {
-        if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
-            return c.asyncData.call(c, {
-                store,
-                route: to
-            }).then(() => {
-                c.asyncDataFetched = true;
-            });
-        }
-    })).then(() => {
-        loading.finish();
-        next();
-    }).catch(next);
-});
-
-router.onReady(() => {
     app.$mount('#app');
 });

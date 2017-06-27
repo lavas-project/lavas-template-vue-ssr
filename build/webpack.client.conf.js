@@ -16,9 +16,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 var WebpackCdnPlugin = require('webpack-cdn-plugin');
+var VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 var env = process.env.NODE_ENV === 'testing'
     ? require('../config/test.env')
@@ -64,10 +64,6 @@ var webpackConfig = merge(baseWebpackConfig, {
             cssProcessorOptions: {
                 safe: true
             }
-        }),
-
-        new SkeletonWebpackPlugin({
-            webpackConfig: require('./webpack.skeleton.conf')
         }),
 
         // generate dist index.html with correct asset hash for caching.
@@ -137,7 +133,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
         new SwRegisterWebpackPlugin({
             filePath: path.resolve(__dirname, '../src/sw-register.js')
-        })
+        }),
+        new VueSSRClientPlugin()
     ]
 });
 

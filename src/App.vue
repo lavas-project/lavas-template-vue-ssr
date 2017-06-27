@@ -59,6 +59,7 @@ import {mapState, mapActions} from 'vuex';
 import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
 import AppBottomNavigator from '@/components/AppBottomNavigator';
+import '@/assets/styles/global.styl';
 
 export default {
     name: 'app',

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>*__ name __*</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="/static/manifest.json">
+        <meta name="theme-color" content="#2874f0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="*__ name __*">
+        <link rel="apple-touch-icon" href="/static/img/icons/apple-touch-icon-152x152.png">
+        <meta name="msapplication-TileImage" content="/static/img/icons/msapplication-icon-144x144.png">
+        <meta name="msapplication-TileColor" content="#000000">
+        <style>
+            #skip a { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+            #skip a:focus { position:static; width:auto; height:auto; }
+        </style>
+    </head>
+    <body>
+        <div id="skip"><a href="#app">skip to content</a></div>
+        <!--vue-ssr-outlet-->
+    </body>
+</html>

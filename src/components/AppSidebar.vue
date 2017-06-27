@@ -6,7 +6,7 @@
             @close-mask="close"
         ></app-mask>
 
-        <v-touch 
+        <v-touch
             @panmove="handlePanMove"
             @panend="handlePanEnd"
             :enabled="{ pan: true, tap: false }"
@@ -24,14 +24,14 @@
             <!-- 头部 -->
             <div v-if="title" class="app-sidebar-title" @click.stop="close">
                 <span class="app-sidebar-title-left-icon">
-                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft" />
+                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft"></img>
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
                     <v-icon light v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>
                 </span>
                 <span>{{ title.text }}</span>
                 <slot name="logo" class="app-sidebar-title-right-logo">
                     <span class="app-sidebar-title-right-logo">
-                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight" />
+                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight"></img>
                         <icon v-else-if="title.svgRight" :name="title.svgRight"></icon>
                         <v-icon v-else-if="title.iconRight">{{ title.iconRight }}</v-icon>
                     </span>
@@ -47,7 +47,7 @@
                         <ul v-if="block.list">
                             <li v-for="item in block.list" @click.stop="closeAndGo(item.route)">
                                 <span v-if="item.icon || item.image || item.svg " class="app-sidebar-block-left-icon">
-                                    <img v-if="item.image" :src="item.image" :alt="item.alt" />
+                                    <img v-if="item.image" :src="item.image" :alt="item.alt"></img>
                                     <icon v-else-if="item.svg" :name="item.svg"></icon>
                                     <v-icon v-else-if="item.icon">{{ item.icon }}</v-icon>
                                 </span>
@@ -182,7 +182,7 @@ export default {
             }
         }
     },
-    created() {
+    activated() {
         this.caclWidth();
     }
 };
@@ -203,7 +203,7 @@ a
 
 .app-sidebar-wrapper
     z-index 9999
-    
+
     .app-sidebar-swipe
         position fixed
         top 0
@@ -224,10 +224,10 @@ a
     box-shadow 3px 0 8px 1px rgba(0, 0, 0, 0.4)
     overflow-y auto
     z-index 9999
-    
+
     &.app-sidebar-content-right
         box-shadow -3px 0 8px 1px rgba(0, 0, 0, 0.4)
-        
+
         &.app-sidebar-title,
         &.app-sidebar-blocks
             text-align right
@@ -281,7 +281,7 @@ a
 
     .app-sidebar-blocks
         text-align left
-            
+
         .app-sidebar-block
             padding 10px 0
             border-bottom 1px solid #e0e0e0
