@@ -6,16 +6,6 @@
             @close-mask="close"
         ></app-mask>
 
-        <v-touch
-            @panmove="handlePanMove"
-            @panend="handlePanEnd"
-            :enabled="{ pan: true, tap: false }"
-            :pan-options="panOptions">
-            <div
-                class="app-sidebar-swipe"
-                :class="{'app-sidebar-swipe-right': slideFrom !== 'left'}"></div>
-        </v-touch>
-
         <!-- sidebar 内容部分 -->
         <div
             class="app-sidebar-content"
@@ -82,11 +72,7 @@ export default {
             translateX: 0, // 当前水平位移
             clientWidth: 0, // 窗口宽度
             widthInPx: 0, // sidebar以px为单位的宽度
-            showWidthThresholdInPx: 0, // 展示阈值以px为单位
-            panOptions: { // hammer.js pan手势配置对象
-                direction: 'horizontal',
-                threshold: 10
-            }
+            showWidthThresholdInPx: 0 // 展示阈值以px为单位
         };
     },
     computed: {
@@ -120,7 +106,7 @@ export default {
                 '-webkit-transition': transition,
                 transform: `translate3d(${currentTranslateX}px, 0, 0)`,
                 '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`
-            }
+            };
             // 展示状态绝对定位靠左/右
             styleObj[this.slideFrom] = 0;
             return styleObj;
@@ -158,32 +144,10 @@ export default {
         open() {
             this.$emit('show-sidebar');
             this.translateX = 0;
-        },
-        handlePanMove(event) {
-            let {deltaX} = event;
-            let translateX = deltaX + (this.slideFrom === 'left' ? -this.widthInPx : this.widthInPx);
-            this.isDragging = true;
-            if (this.widthInPx < Math.abs(deltaX)) { // 滑动超过了sidebar宽度
-                return;
-            }
-            this.translateX = Math.round(translateX);
-        },
-        handlePanEnd(event) {
-            let {direction, deltaX} = event;
-            this.isDragging = false;
-            if (direction === this.closeDirection) {
-                this.close();
-            }
-            else if (Math.abs(deltaX) > this.showWidthThresholdInPx) { // 停止时滑动距离超过阈值，认为需要展示
-                this.open();
-            }
-            else {
-                this.close();
-            }
         }
     },
     created() {
-        if (process.env.VUE_ENV === 'client') {
+        if (!this.$isServer) {
             this.caclWidth();
         }
     }

@@ -3,14 +3,12 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-
 // 定义主题列表
 const themeList = {
     // 定义主题名称
     myTheme: {
         themeColor: {
             primary: 'rgb(40, 116, 240)',
-            // primary: '#4DBA87',
             accent: '$blue.accent-2',
             secondary: '$grey.darken-3',
             info: '$blue.base',

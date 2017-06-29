@@ -4,7 +4,6 @@ const base = require('./webpack.base.conf');
 const utils = require('./utils');
 const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
 
@@ -15,17 +14,12 @@ module.exports = merge(base, {
         filename: 'server-bundle.js',
         libraryTarget: 'commonjs2'
     },
-    resolve: {
-        alias: {
-            'create-api': './create-api-server.js'
-        }
-    },
     // https://webpack.js.org/configuration/externals/#externals
     // https://github.com/liady/webpack-node-externals
-    // externals: nodeExternals({
-    //     // do not externalize CSS files in case we need to import it from a dep
-    //     whitelist: /\.css$/
-    // }),
+    externals: nodeExternals({
+        // do not externalize CSS files in case we need to import it from a dep
+        whitelist: /\.(css|vue)$/
+    }),
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -34,13 +28,6 @@ module.exports = merge(base, {
         // extract css into its own file
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css')
-        }),
-        // Compress extracted CSS. We are using this plugin so that possible
-        // duplicated CSS from different components can be deduped.
-        new OptimizeCSSPlugin({
-            cssProcessorOptions: {
-                safe: true
-            }
         }),
         new VueSSRServerPlugin()
     ]

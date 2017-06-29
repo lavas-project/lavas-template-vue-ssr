@@ -8,10 +8,6 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import {createApp} from './app';
 import ProgressBar from '@/components/ProgressBar.vue';
-import VueTouch from 'vue-touch';
-
-// 基于hammer.js的手势库
-Vue.use(VueTouch);
 
 // global progress bar
 const loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
