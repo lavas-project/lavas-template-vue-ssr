@@ -60,8 +60,6 @@ import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
 import AppBottomNavigator from '@/components/AppBottomNavigator';
 
-import '@/assets/styles/global.styl';
-
 export default {
     name: 'app',
     components: {
@@ -120,12 +118,16 @@ export default {
 </script>
 
 <style lang="stylus">
+
+@import './assets/styles/global'
+
 #app
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
     text-align center
     color #2c3e50
+
 </style>
 
 <style lang="stylus" scoped>
