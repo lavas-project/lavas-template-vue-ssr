@@ -59,7 +59,7 @@ const serve = (path, cache) => express.static(resolve(path), {
 });
 
 app.use(compression({ threshold: 0 }));
-// app.use(favicon('./public/logo-48.png'));
+app.use(favicon('./static/img/icons/favicon-32x32.png'));
 app.use('/static', serve('./static', true));
 app.use('/dist', serve('./dist', true));
 app.use('/public', serve('./public', true));
