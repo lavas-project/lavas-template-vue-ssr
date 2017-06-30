@@ -16,7 +16,7 @@ module.exports = merge(base, {
     },
     resolve: {
         alias: {
-            'hammerjs$': 'vue-touch-ssr/src/hammer-ssr.js'
+            hammerjs$: 'vue-touch-ssr/src/hammer-ssr.js'
         }
     },
     // https://webpack.js.org/configuration/externals/#externals
