@@ -6,6 +6,16 @@
             @close-mask="close"
         ></app-mask>
 
+        <v-touch
+            @panmove="handlePanMove"
+            @panend="handlePanEnd"
+            :enabled="{ pan: true, tap: false }"
+            :pan-options="panOptions">
+            <div
+                class="app-sidebar-swipe"
+                :class="{'app-sidebar-swipe-right': slideFrom !== 'left'}"></div>
+        </v-touch>
+
         <!-- sidebar 内容部分 -->
         <div
             class="app-sidebar-content"
@@ -52,7 +62,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 import AppMask from './AppMask.vue';
 
 // hammer.js 方向常量
@@ -72,7 +82,11 @@ export default {
             translateX: 0, // 当前水平位移
             clientWidth: 0, // 窗口宽度
             widthInPx: 0, // sidebar以px为单位的宽度
-            showWidthThresholdInPx: 0 // 展示阈值以px为单位
+            showWidthThresholdInPx: 0, // 展示阈值以px为单位
+            panOptions: { // hammer.js pan手势配置对象
+                direction: 'horizontal',
+                threshold: 10
+            }
         };
     },
     computed: {
@@ -90,25 +104,29 @@ export default {
             };
         },
         inlineStyle() {
+
             // 拖拽时取消transition
             let transition = this.isDragging ? 'none' : 'transform .5s ease';
+
             // 隐藏状态时的位置
             let initTranslateX = this.widthInPx + BOX_SHADOW_WIDTH;
             if (this.slideFrom === 'left') {
                 initTranslateX = -initTranslateX;
             }
+
             // 当前水平方向平移距离
-            let currentTranslateX = (this.isDragging ?
-                this.translateX : (this.show ? 0 : initTranslateX));
+            let currentTranslateX = this.isDragging
+                ? this.translateX
+                : (this.show ? 0 : initTranslateX);
             let styleObj = {
-                width: `${this.widthInPx}px`,
-                transition: transition,
+                'width': `${this.widthInPx}px`,
+                'transition': transition,
                 '-webkit-transition': transition,
-                transform: `translate3d(${currentTranslateX}px, 0, 0)`,
-                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`
+                'transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                [this.slideFrom]: 0 // 展示状态绝对定位靠左/右
             };
-            // 展示状态绝对定位靠左/右
-            styleObj[this.slideFrom] = 0;
+
             return styleObj;
         },
         closeDirection() {
@@ -144,6 +162,28 @@ export default {
         open() {
             this.$emit('show-sidebar');
             this.translateX = 0;
+        },
+        handlePanMove(event) {
+            let deltaX = event.deltaX;
+            let translateX = deltaX + (this.slideFrom === 'left' ? -this.widthInPx : this.widthInPx);
+            this.isDragging = true;
+            if (this.widthInPx < Math.abs(deltaX)) { // 滑动超过了sidebar宽度
+                return;
+            }
+            this.translateX = Math.round(translateX);
+        },
+        handlePanEnd(event) {
+            let {direction, deltaX} = event;
+            this.isDragging = false;
+            if (direction === this.closeDirection) {
+                this.close();
+            }
+            else if (Math.abs(deltaX) > this.showWidthThresholdInPx) { // 停止时滑动距离超过阈值，认为需要展示
+                this.open();
+            }
+            else {
+                this.close();
+            }
         }
     },
     created() {

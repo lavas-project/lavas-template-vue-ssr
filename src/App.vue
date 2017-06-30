@@ -17,8 +17,7 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter"
-                    @before-leave="handleBeforeLeave">
+                    @after-enter="handleAfterEnter">
                     <keep-alive>
                         <router-view
                             :key="$route.fullPath"
@@ -33,8 +32,7 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter"
-                    @before-leave="handleBeforeLeave">
+                    @after-enter="handleAfterEnter">
                     <router-view
                         :key="$route.fullPath"
                         v-if="$route.meta.notKeepAlive"
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 import {mapState, mapActions} from 'vuex';
 import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
@@ -83,7 +81,7 @@ export default {
         ]),
         ...mapActions('appShell/appSidebar', [
             'showSidebar',
-            'hideSidebar',
+            'hideSidebar'
         ]),
         ...mapActions('appShell/appBottomNavigator', [
             'activateBottomNav'
@@ -92,11 +90,7 @@ export default {
             this.setPageSwitching(true);
         },
         handleAfterEnter(el) {
-            el.scrollTop = el.dataset.scrollTop;
             this.setPageSwitching(false);
-        },
-        handleBeforeLeave(el) {
-            el.dataset.scrollTop = el.scrollTop;
         },
         handleClickHeaderBack() {
             this.$router.go(-1);
@@ -118,16 +112,14 @@ export default {
 </script>
 
 <style lang="stylus">
-
+/* csshint-disable */
 @import './assets/styles/global'
-
 #app
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
     text-align center
     color #2c3e50
-
 </style>
 
 <style lang="stylus" scoped>
