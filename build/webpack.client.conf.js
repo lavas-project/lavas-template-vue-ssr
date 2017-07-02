@@ -3,8 +3,6 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-/* eslint-disable no-console */
-
 const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
@@ -12,15 +10,13 @@ const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
-const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
-const env = process.env.NODE_ENV === 'production'
+let env = process.env.NODE_ENV === 'production'
     ? config.build.env
     : config.dev.env;
 
@@ -38,9 +34,10 @@ let webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
     plugins: [
+
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
-            'process.env.VUE_ENV': '"client"'
+            'process.env.VUE_ENV': '"client"',
             'process.env': env
         }),
 
@@ -68,6 +65,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: function (module, count) {
+
                 // any required modules inside node_modules are extracted to vendor
                 return (
                     module.resource
@@ -124,6 +122,7 @@ if (config.build.productionGzip) {
 
 if (config.build.bundleAnalyzerReport) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
     webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 }
 

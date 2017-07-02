@@ -3,8 +3,6 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-/* eslint-disable no-console */
-
 const path = require('path');
 const config = require('../config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -17,9 +15,7 @@ exports.assetsPath = function (newPath) {
     return path.posix.join(assetsSubDirectory, newPath);
 };
 
-exports.cssLoaders = function (options) {
-    options = options || {};
-
+exports.cssLoaders = function (options = {}) {
     let cssLoader = {
         loader: 'css-loader',
         options: {
@@ -30,7 +26,8 @@ exports.cssLoaders = function (options) {
 
     // generate loader string to be used with extract text plugin
     function generateLoaders(loader, loaderOptions) {
-        var loaders = [cssLoader];
+        let loaders = [cssLoader];
+
         if (loader) {
             loaders.push({
                 loader: loader + '-loader',
@@ -49,7 +46,9 @@ exports.cssLoaders = function (options) {
             });
         }
 
-        return ['vue-style-loader'].concat(loaders);
+        let newLoaders = loaders.unshift('vue-style-loader');
+
+        return newLoaders;
     }
 
     // https://vue-loader.vuejs.org/en/configurations/extract-css.html
@@ -71,10 +70,12 @@ exports.styleLoaders = function (options) {
 
     Object.keys(loaders).forEach(extension => {
         let loader = loaders[extension];
+
         output.push({
             test: new RegExp('\\.' + extension + '$'),
             use: loader
         });
     });
+
     return output;
 };

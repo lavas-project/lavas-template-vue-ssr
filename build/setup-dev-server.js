@@ -1,3 +1,8 @@
+/**
+ * @file 调试 server
+ * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
+ */
+
 const path = require('path');
 const webpack = require('webpack');
 const MFS = require('memory-fs');
@@ -7,14 +12,16 @@ const serverConfig = require('./webpack.server.conf');
 const readFile = (fs, file) => {
     try {
         return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
-    } catch (e) { }
+    }
+    catch (e) {}
 };
 
 module.exports = function setupDevServer(app, cb) {
-    let bundle, clientManifest;
+    let bundle;
+    let clientManifest;
     let resolve;
-    const readyPromise = new Promise(r => { resolve = r });
-    const ready = (...args) => {
+    let readyPromise = new Promise(r => (resolve = r));
+    let ready = (...args) => {
         resolve();
         cb(...args);
     };
@@ -24,16 +31,18 @@ module.exports = function setupDevServer(app, cb) {
     clientConfig.output.filename = '[name].js';
 
     // dev middleware
-    const clientCompiler = webpack(clientConfig);
-    const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
+    let clientCompiler = webpack(clientConfig);
+    let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
         publicPath: clientConfig.output.publicPath,
         noInfo: true
     });
+
     app.use(devMiddleware);
     clientCompiler.plugin('done', stats => {
         stats = stats.toJson();
         stats.errors.forEach(err => console.error(err));
         stats.warnings.forEach(err => console.warn(err));
+
         if (stats.errors.length) {
             return;
         }
@@ -42,15 +51,16 @@ module.exports = function setupDevServer(app, cb) {
             devMiddleware.fileSystem,
             'vue-ssr-client-manifest.json'
         ));
+
         if (bundle) {
             ready(bundle, {
                 clientManifest
             });
         }
-    })
+    });
 
     // hot middleware
-    app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }));
+    app.use(require('webpack-hot-middleware')(clientCompiler, {heartbeat: 5000}));
 
     // watch and update server renderer
     const serverCompiler = webpack(serverConfig);

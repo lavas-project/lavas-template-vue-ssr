@@ -1,3 +1,8 @@
+/**
+ * @file 开发环境 webpack dev server 配置文件
+ * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
+ */
+
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
@@ -24,9 +29,11 @@ module.exports = merge(base, {
             hammerjs$: 'vue-touch-ssr/src/hammer-ssr.js'
         }
     },
+
     // https://webpack.js.org/configuration/externals/#externals
     // https://github.com/liady/webpack-node-externals
     externals: nodeExternals({
+
         // do not externalize CSS files in case we need to import it from a dep
         whitelist: [/\.(css|vue)$/, /vue-touch-ssr/]
     }),
@@ -35,6 +42,7 @@ module.exports = merge(base, {
             'process.env.VUE_ENV': '"server"',
             'process.env': env
         }),
+
         // extract css into its own file
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css')
