@@ -17,6 +17,9 @@ npm run dev
 # 构建线上生产环境产物
 npm run build
 
+# 检查您的代码是否规范
+npm run lint
+
 # 构建线上生产环境产物并且查看构建分析报告
 npm run build --report
 ```
