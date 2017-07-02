@@ -62,6 +62,7 @@ module.exports = function setupDevServer(app, cb) {
         }
         stats = stats.toJson();
         if (stats.errors.length) {
+
             // print all errors
             for (let error of stats.errors) {
                 console.error(error);
