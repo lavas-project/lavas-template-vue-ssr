@@ -31,9 +31,5 @@ const themeList = {
 };
 
 module.exports = {
-    manifest: {
-        // backgroundColor: '#000000',
-        // themeColor: '#4DBA87'
-    },
     theme: themeList.myTheme // 和主题列表中的主题名称对应
 };

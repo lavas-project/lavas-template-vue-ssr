@@ -5,12 +5,12 @@
 
 /* eslint-disable no-console */
 
-var path = require('path');
-var config = require('../config');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const config = require('../config');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 exports.assetsPath = function (newPath) {
-    var assetsSubDirectory = process.env.NODE_ENV === 'production'
+    let assetsSubDirectory = process.env.NODE_ENV === 'production'
         ? config.build.assetsSubDirectory
         : config.dev.assetsSubDirectory
     ;
@@ -20,7 +20,7 @@ exports.assetsPath = function (newPath) {
 exports.cssLoaders = function (options) {
     options = options || {};
 
-    var cssLoader = {
+    let cssLoader = {
         loader: 'css-loader',
         options: {
             minimize: process.env.NODE_ENV === 'production',
@@ -66,11 +66,11 @@ exports.cssLoaders = function (options) {
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-    var output = [];
-    var loaders = exports.cssLoaders(options);
+    let output = [];
+    let loaders = exports.cssLoaders(options);
 
-    Object.keys(loaders).forEach(function (extension) {
-        var loader = loaders[extension];
+    Object.keys(loaders).forEach(extension => {
+        let loader = loaders[extension];
         output.push({
             test: new RegExp('\\.' + extension + '$'),
             use: loader

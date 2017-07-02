@@ -5,18 +5,18 @@
 
 /* eslint-disable no-console */
 
-var path = require('path');
-var utils = require('./utils');
-var webpack = require('webpack');
-var config = require('../config');
-var merge = require('webpack-merge');
-var baseWebpackConfig = require('./webpack.base.conf');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
-var VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+const path = require('path');
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const merge = require('webpack-merge');
+const baseWebpackConfig = require('./webpack.base.conf');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir);
@@ -32,7 +32,7 @@ module.exports = merge(baseWebpackConfig, {
     plugins: [
         // strip dev-only code in Vue source
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            'process.env.NODE_ENV': config.dev.env.NODE_ENV,
             'process.env.VUE_ENV': '"server"'
         }),
         // extract vendor chunks for better caching
