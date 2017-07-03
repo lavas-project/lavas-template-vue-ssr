@@ -47,39 +47,45 @@ Vue.mixin({
         });
     },
     beforeRouteLeave(to, from, next) {
-        this.$store.dispatch('appShell/saveScrollTop', {path: from.fullPath, scrollTop: this.$el.scrollTop});
+        this.$store.dispatch('appShell/saveScrollTop', {
+            path: from.fullPath,
+            scrollTop: this.$el.scrollTop
+        });
         next();
     }
 });
 
-// after async components have been resolved
-router.beforeResolve((to, from, next) => {
-    let matched = router.getMatchedComponents(to);
-    let prevMatched = router.getMatchedComponents(from);
-    let diffed = false;
-    let activated = matched.filter((c, i) => {
-        let ret = diffed || (diffed = (prevMatched[i] !== c));
-        return ret;
+router.onReady(() => {
+
+    // after async components have been resolved
+    router.beforeResolve((to, from, next) => {
+        let matched = router.getMatchedComponents(to);
+        let prevMatched = router.getMatchedComponents(from);
+        let diffed = false;
+        let activated = matched.filter((c, i) => {
+            let ret = diffed || (diffed = (prevMatched[i] !== c));
+            return ret;
+        });
+
+        if (!activated.length) {
+            return next();
+        }
+
+        loading.start();
+        Promise.all(activated.map(c => {
+            if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
+                return c.asyncData.call(c, {
+                    store,
+                    route: to
+                }).then(() => {
+                    c.asyncDataFetched = true;
+                });
+            }
+        })).then(() => {
+            loading.finish();
+            next();
+        }).catch(next);
     });
 
-    if (!activated.length) {
-        return next();
-    }
-
-    loading.start();
-    Promise.all(activated.map(c => {
-        if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
-            return c.asyncData.call(c, {
-                store,
-                route: to
-            }).then(() => {
-                c.asyncDataFetched = true;
-            });
-        }
-    })).then(() => {
-        loading.finish();
-        next();
-    }).catch(next);
+    app.$mount('#app');
 });
-
-router.onReady(() => app.$mount('#app'));

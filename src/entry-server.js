@@ -14,13 +14,12 @@ const isDev = process.env.NODE_ENV !== 'production';
 // Since data fetching is async, this function is expected to
 // return a Promise that resolves to the app instance.
 export default function (context) {
-
     return new Promise((resolve, reject) => {
-        const s = isDev && Date.now();
-        const {app, router, store} = createApp();
+        let s = isDev && Date.now();
+        let {app, router, store} = createApp();
 
-        const url = context.url;
-        const fullPath = router.resolve(url).route.fullPath;
+        let url = context.url;
+        let fullPath = router.resolve(url).route.fullPath;
 
         if (fullPath !== url) {
             reject({url: fullPath});
@@ -31,7 +30,7 @@ export default function (context) {
 
         // wait until router has resolved possible async hooks
         router.onReady(() => {
-            const matchedComponents = router.getMatchedComponents();
+            let matchedComponents = router.getMatchedComponents();
 
             // no matched routes
             if (!matchedComponents.length) {
