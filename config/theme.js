@@ -3,8 +3,10 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
+'use strict';
+
 // 定义主题列表
-const themeList = {
+let themeList = {
     // 定义主题名称
     myTheme: {
         themeColor: {

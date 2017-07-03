@@ -3,9 +3,8 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-import app from './app';
+import {createApp} from './app';
 
-const createApp = app.createApp;
 const isDev = process.env.NODE_ENV !== 'production';
 
 // This exported function will be called by `bundleRenderer`.

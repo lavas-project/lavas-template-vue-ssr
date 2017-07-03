@@ -3,7 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-/* eslint-disable no-console */
+'use strict';
 
 const path = require('path');
 const utils = require('./utils');
@@ -11,7 +11,6 @@ const config = require('../config');
 const vueLoaderConfig = require('./vue-loader.conf');
 
 require('babel-polyfill');
-
 function resolve(dir) {
     return path.join(__dirname, '..', dir);
 }
@@ -36,16 +35,18 @@ module.exports = {
     },
     module: {
         rules: [
+
             // register custom svgs
             {
                 resource: resolve('src/app.js'),
                 loader: 'svg-loader',
                 enforce: 'pre'
             },
+
             // inject vuetify theme variables
             {
                 resource: resolve('src/assets/styles/global'),
-                loader: 'theme-loader!import-glob',
+                loader: 'theme-loader',
                 enforce: 'pre'
             },
             {
@@ -55,6 +56,7 @@ module.exports = {
                         loader: 'vue-loader',
                         options: vueLoaderConfig
                     },
+
                     // inject global variables in every .vue file
                     {
                         loader: 'theme-loader',

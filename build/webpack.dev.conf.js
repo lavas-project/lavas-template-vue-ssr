@@ -26,7 +26,7 @@ module.exports = merge(baseWebpackConfig, {
 
         // strip dev-only code in Vue source
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': config.dev.env.NODE_ENV,
+            'process.env': config.dev.env,
             'process.env.VUE_ENV': '"server"'
         }),
 

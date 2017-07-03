@@ -33,7 +33,7 @@ let state = {
      *
      * @type {Object}
      */
-    lastPage: {}
+    historyPageScrollTop: {}
 };
 
 let actions = {
@@ -86,7 +86,7 @@ let mutations = {
         state.pageTransitionName = pageTransitionName;
     },
     [types.SAVE_SCROLLTOP](state, {path, scrollTop}) {
-        state.lastPage[path] = scrollTop;
+        state.historyPageScrollTop[path] = scrollTop;
     }
 };
 
@@ -348,12 +348,7 @@ export default {
             mutations: {
                 [types.ACTIVATE_APP_BOTTOM_NAV](state, name) {
                     state.navs = state.navs.map(nav => {
-                        if (nav.name === name) {
-                            nav.active = true;
-                        }
-                        else {
-                            nav.active = false;
-                        }
+                        nav.active = nav.name === name;
                         return nav;
                     });
                 },

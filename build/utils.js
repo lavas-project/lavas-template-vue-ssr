@@ -15,7 +15,9 @@ exports.assetsPath = function (newPath) {
     return path.posix.join(assetsSubDirectory, newPath);
 };
 
-exports.cssLoaders = function (options = {}) {
+exports.cssLoaders = function (options) {
+    options = options || {};
+
     let cssLoader = {
         loader: 'css-loader',
         options: {
@@ -46,9 +48,7 @@ exports.cssLoaders = function (options = {}) {
             });
         }
 
-        let newLoaders = loaders.unshift('vue-style-loader');
-
-        return newLoaders;
+        return ['vue-style-loader'].concat(loaders);
     }
 
     // https://vue-loader.vuejs.org/en/configurations/extract-css.html
@@ -68,12 +68,10 @@ exports.styleLoaders = function (options) {
     let output = [];
     let loaders = exports.cssLoaders(options);
 
-    Object.keys(loaders).forEach(extension => {
-        let loader = loaders[extension];
-
+    Object.keys(loaders).forEach(function (extension) {
         output.push({
             test: new RegExp('\\.' + extension + '$'),
-            use: loader
+            use: loaders[extension]
         });
     });
 
