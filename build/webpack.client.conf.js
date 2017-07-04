@@ -3,8 +3,6 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-/* eslint-disable no-console */
-
 const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
@@ -53,6 +51,7 @@ let webpackConfig = merge(baseWebpackConfig, {
                     ) === 0
                 );
             }
+            /* eslint-enable fecs-use-method-definition */
         }),
 
         // extract webpack runtime and module manifest to its own file in order to
