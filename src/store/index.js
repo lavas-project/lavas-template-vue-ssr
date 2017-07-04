@@ -5,12 +5,15 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import appShell from './modules/app-shell';
+import {createAppShellState} from './modules/app-shell';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-    modules: {
-        appShell
-    }
-});
+
+export function createStore() {
+    return new Vuex.Store({
+        modules: {
+            appShell: createAppShellState()
+        }
+    });
+}

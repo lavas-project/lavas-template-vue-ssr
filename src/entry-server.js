@@ -16,6 +16,7 @@ export default function (context) {
     return new Promise((resolve, reject) => {
         let s = isDev && Date.now();
         let {app, router, store} = createApp();
+        console.log(store.state.appShell.appHeader.actions);
 
         let url = context.url;
         let fullPath = router.resolve(url).route.fullPath;

@@ -5,7 +5,7 @@
                 <v-icon class="search-icon">arrow_back</v-icon>
             </v-btn>
             <form @submit.prevent="search">
-                <input class="search-input" v-model="query" type="search" autocomplete="off" placeholder="请输入搜索词" autocapitalize="off" />
+                <input class="search-input" v-model="query" type="search" autocomplete="off" placeholder="请输入搜索词" autocapitalize="off"></input>
             </form>
             <v-btn light icon class="search-btn" @click.native="query = ''">
                 <v-icon class="search-icon">close</v-icon>
@@ -36,7 +36,16 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+let state = {
+    appHeaderState: {
+        show: false
+    }
+};
+
+function setState(store) {
+    store.dispatch('appShell/appHeader/setAppHeader', state.appHeaderState);
+    store.dispatch('appShell/appBottomNavigator/hideBottomNav');
+}
 
 export default {
     name: 'search',
@@ -47,13 +56,10 @@ export default {
             data: []
         };
     },
+    async asyncData({store, route}) {
+        setState(store);
+    },
     methods: {
-        ...mapActions('appShell/appHeader', [
-            'setAppHeader'
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'hideBottomNav'
-        ]),
         async search() {
 
             // 把数据清空
@@ -108,8 +114,7 @@ export default {
         }
     },
     activated() {
-        this.setAppHeader({show: false});
-        this.hideBottomNav();
+        setState(this.$store);
     }
 };
 </script>

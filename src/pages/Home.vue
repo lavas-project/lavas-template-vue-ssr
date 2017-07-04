@@ -6,41 +6,39 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+let state = {
+    appHeaderState: {
+        show: true,
+        title: 'Lavas',
+        showMenu: true,
+        showBack: false,
+        showLogo: true,
+        actions: [
+            {
+                icon: 'search',
+                route: '/search'
+            }
+        ]
+    },
+    activateBottomNav: 'home'
+};
+
+function setState(store) {
+    store.dispatch('appShell/appHeader/setAppHeader', state.appHeaderState);
+    store.dispatch('appShell/appBottomNavigator/activateBottomNav', state.activateBottomNav);
+    store.dispatch('appShell/appBottomNavigator/showBottomNav');
+}
 
 export default {
     name: 'home',
-    props: {},
-    methods: {
-        ...mapActions('appShell/appHeader', [
-            'setAppHeader'
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'showBottomNav',
-            'activateBottomNav'
-        ])
-    },
-    async asyncData() {
+    async asyncData({store, route}) {
+        setState(store);
         await new Promise((resolve, reject) => {
             setTimeout(resolve, 500);
         });
     },
     activated() {
-        this.setAppHeader({
-            show: true,
-            title: 'Lavas',
-            showMenu: true,
-            showBack: false,
-            showLogo: true,
-            actions: [
-                {
-                    icon: 'search',
-                    route: '/search'
-                }
-            ]
-        });
-        this.activateBottomNav('home');
-        this.showBottomNav();
+        setState(this.$store);
     }
 };
 </script>

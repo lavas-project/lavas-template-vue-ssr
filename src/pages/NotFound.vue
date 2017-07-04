@@ -10,28 +10,29 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+let state = {
+    appHeaderState: {
+        title: '页面未找到',
+        show: true,
+        showMenu: false,
+        showBack: true,
+        showLogo: false,
+        actions: []
+    }
+};
+
+function setState(store) {
+    store.dispatch('appShell/appHeader/setAppHeader', state.appHeaderState);
+    store.dispatch('appShell/appBottomNavigator/hideBottomNav');
+}
 
 export default {
     name: 'notFound',
-    methods: {
-        ...mapActions('appShell/appHeader', [
-            'setAppHeader'
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'hideBottomNav'
-        ])
+    async asyncData({store, route}) {
+        setState(store);
     },
     activated() {
-        this.setAppHeader({
-            title: '页面未找到',
-            show: true,
-            showMenu: false,
-            showBack: true,
-            showLogo: false,
-            actions: []
-        });
-        this.hideBottomNav();
+        setState(this.$store);
     }
 };
 </script>

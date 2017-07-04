@@ -26,40 +26,39 @@ Fast - Respond quickly to user interactions with silky smooth animations and no 
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+let state = {
+    appHeaderState: {
+        show: true,
+        title: 'Lavas',
+        showMenu: false,
+        showBack: true,
+        showLogo: false,
+        actions: [
+            {
+                icon: 'home',
+                route: {
+                    name: 'home'
+                }
+            }
+        ]
+    }
+};
+
+function setState(store) {
+    store.dispatch('appShell/appHeader/setAppHeader', state.appHeaderState);
+    store.dispatch('appShell/appBottomNavigator/hideBottomNav');
+}
 
 export default {
     name: 'detail',
-    methods: {
-        ...mapActions('appShell/appHeader', [
-            'setAppHeader'
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'hideBottomNav'
-        ])
-    },
-    async asyncData() {
+    async asyncData({store, route}) {
+        setState(store);
         await new Promise((resolve, reject) => {
             setTimeout(resolve, 500);
         });
     },
     created() {
-        this.setAppHeader({
-            show: true,
-            title: 'Lavas',
-            showMenu: false,
-            showBack: true,
-            showLogo: false,
-            actions: [
-                {
-                    icon: 'home',
-                    route: {
-                        name: 'home'
-                    }
-                }
-            ]
-        });
-        this.hideBottomNav();
+        setState(this.$store);
     }
 };
 </script>

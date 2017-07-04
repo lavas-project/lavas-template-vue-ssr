@@ -130,7 +130,7 @@ function render(req, res) {
     }
 
     let context = {
-        title: 'Vue HN 2.0', // default title
+        title: 'Lavas', // default title
         url: req.url
     };
     renderer.renderToString(context, (err, html) => {

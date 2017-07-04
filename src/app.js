@@ -6,7 +6,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import {createRouter} from './router';
-import store from './store';
+import {createStore} from './store';
 import App from './App.vue';
 import Icon from 'vue-awesome/components/Icon.vue';
 
@@ -18,6 +18,7 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 export function createApp() {
     let router = createRouter();
+    let store = createStore();
     let app = new Vue({
         router,
         store,

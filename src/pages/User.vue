@@ -28,10 +28,35 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+let state = {
+    appHeaderState: {
+        show: true,
+        title: 'Lavas',
+        showMenu: true,
+        showBack: false,
+        showLogo: true,
+        actions: [
+            {
+                icon: 'search',
+                route: '/search'
+            }
+        ]
+    },
+    activateBottomNav: 'user'
+};
+
+function setState(store) {
+    store.dispatch('appShell/appHeader/setAppHeader', state.appHeaderState);
+    store.dispatch('appShell/appBottomNavigator/activateBottomNav', state.activateBottomNav);
+    store.dispatch('appShell/appBottomNavigator/showBottomNav');
+}
+
 
 export default {
     name: 'user',
+    async asyncData({store, route}) {
+        setState(store);
+    },
     data() {
         return {
             items: [
@@ -53,38 +78,8 @@ export default {
             ]
         };
     },
-    methods: {
-        ...mapActions('appShell/appHeader', [
-            'setAppHeader'
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'showBottomNav',
-            'activateBottomNav'
-        ])
-    },
     activated() {
-        this.setAppHeader({
-            show: true,
-            title: 'Lavas',
-            showMenu: true,
-            showBack: false,
-            showLogo: true,
-            actions: [
-                {
-                    icon: 'search',
-                    route: '/search'
-                }
-            ]
-        });
-
-        // 设置当前 bottom navigator 显示的 item
-        this.activateBottomNav('user');
-        this.showBottomNav();
-    },
-    async asyncData({store, route}) {
-        await new Promise(resolve => {
-            setTimeout(resolve, 1000);
-        });
+        setState(this.$store);
     }
 };
 </script>
