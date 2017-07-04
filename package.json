@@ -15,6 +15,7 @@
   "dependencies": {
     "compression": "^1.6.2",
     "fastclick": "^1.0.6",
+    "iscroll": "5.1.0",
     "lru-cache": "^4.1.1",
     "normalize.css": "^7.0.0",
     "serve-favicon": "^2.4.3",
@@ -22,7 +23,6 @@
     "vue-awesome": "^2.3.1",
     "vue-router": "^2.3.1",
     "vue-server-renderer": "^2.3.4",
-    "vue-touch-ssr": "^2.0.0-beta.6",
     "vuetify": "^0.12.7",
     "vuex": "^2.3.1"
   },

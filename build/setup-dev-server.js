@@ -3,6 +3,8 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
+'use strict';
+
 const path = require('path');
 const webpack = require('webpack');
 const MFS = require('memory-fs');
@@ -27,7 +29,7 @@ module.exports = function setupDevServer(app, cb) {
     };
 
     // modify client config to work with hot middleware
-    clientConfig.entry.app = ['webpack-hot-middleware/client', ...clientConfig.entry.app];
+    // clientConfig.entry.app = ['webpack-hot-middleware/client', ...clientConfig.entry.app];
     clientConfig.output.filename = '[name].js';
 
     // dev middleware

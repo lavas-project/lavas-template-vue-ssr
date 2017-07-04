@@ -16,6 +16,10 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
+const env = process.env.NODE_ENV === 'production'
+    ? config.build.env
+    : config.dev.env;
+
 let webpackConfig = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
@@ -33,7 +37,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
             'process.env.VUE_ENV': '"client"',
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+            'process.env': env
         }),
 
         // split vendor js into its own file
