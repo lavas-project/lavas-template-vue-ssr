@@ -74,6 +74,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
         new SwRegisterWebpackPlugin({
+            prefix: '/',
             filePath: path.resolve(__dirname, '../src/sw-register.js')
         }),
         new VueSSRClientPlugin()
