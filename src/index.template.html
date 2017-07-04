@@ -16,7 +16,7 @@
     </head>
     <body>
         <!--vue-ssr-outlet-->
-        {{ if(isProd) { }}
+        <% if(isProd) { %>
         <script>
             window.onload = function () {
                 var script = document.createElement('script');
@@ -27,6 +27,6 @@
                 firstScript.parentNode.insertBefore(script, firstScript);
             };
         </script>
-        {{ } }}
+        <% } %>
     </body>
 </html>
