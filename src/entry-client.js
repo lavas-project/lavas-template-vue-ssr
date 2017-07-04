@@ -13,6 +13,10 @@ import ProgressBar from '@/components/ProgressBar.vue';
 let loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
 let {app, router, store} = createApp();
 
+if (window.__INITIAL_STATE__) {
+    store.replaceState(window.__INITIAL_STATE__);
+}
+
 document.body.appendChild(loading.$el);
 FastClick.attach(document.body);
 

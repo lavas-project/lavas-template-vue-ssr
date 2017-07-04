@@ -5,7 +5,7 @@
   "author": "*__author__* <*__email__*>",
   "private": true,
   "scripts": {
-    "dev": "cross-env MICRO_CACHE=false node server.js",
+    "dev": "rimraf dist && cross-env MICRO_CACHE=false node server.js",
     "start": "cross-env NODE_ENV=production node server.js",
     "lint": "./node_modules/fecs/bin/fecs --ignore=./.fecsignore --rule --type 'vue,js,css'",
     "build": "rimraf dist && npm run build:client && npm run build:server",

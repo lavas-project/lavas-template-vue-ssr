@@ -70,16 +70,21 @@ let webpackConfig = merge(baseWebpackConfig, {
                 ignore: ['.*']
             }
         ]),
+        new VueSSRClientPlugin()
+    ]
+});
 
+if (process.env.NODE_ENV === 'production') {
+    webpackConfig.plugins = [
+        ...webpackConfig.plugins,
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
         new SwRegisterWebpackPlugin({
             prefix: '/',
             filePath: path.resolve(__dirname, '../src/sw-register.js')
-        }),
-        new VueSSRClientPlugin()
-    ]
-});
+        })
+    ];
+}
 
 if (config.build.productionGzip) {
     const CompressionWebpackPlugin = require('compression-webpack-plugin');
