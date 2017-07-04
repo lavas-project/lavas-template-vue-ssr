@@ -6,7 +6,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MFS = require('memory-fs');
-const clientConfig = require('./webpack.dev.conf');
+const clientConfig = require('./webpack.client.conf');
 const serverConfig = require('./webpack.server.conf');
 
 const readFile = (fs, file) => {

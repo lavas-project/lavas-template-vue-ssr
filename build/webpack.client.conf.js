@@ -1,7 +1,9 @@
 /**
- * @file 生产环境 webpack 配置文件
+ * @file 生产环境 webpack client配置文件
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
+
+/* eslint-disable no-console */
 
 const path = require('path');
 const utils = require('./utils');
@@ -10,15 +12,9 @@ const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-
-let env = process.env.NODE_ENV === 'production'
-    ? config.build.env
-    : config.dev.env;
 
 let webpackConfig = merge(baseWebpackConfig, {
     module: {
@@ -34,38 +30,16 @@ let webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
     plugins: [
-
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
             'process.env.VUE_ENV': '"client"',
-            'process.env': env
-        }),
-
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            sourceMap: true
-        }),
-
-        // extract css into its own file
-        new ExtractTextPlugin({
-            filename: utils.assetsPath('css/[name].[contenthash].css')
-        }),
-
-        // Compress extracted CSS. We are using this plugin so that possible
-        // duplicated CSS from different components can be deduped.
-        new OptimizeCSSPlugin({
-            cssProcessorOptions: {
-                safe: true
-            }
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),
 
         // split vendor js into its own file
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: function (module, count) {
-
                 // any required modules inside node_modules are extracted to vendor
                 return (
                     module.resource
@@ -122,7 +96,6 @@ if (config.build.productionGzip) {
 
 if (config.build.bundleAnalyzerReport) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
     webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 }
 
