@@ -24,6 +24,7 @@ Vue.mixin({
 
     // 当复用的路由组件参数发生变化时，例如/detail/1 => /detail/2
     beforeRouteUpdate(to, from, next) {
+
         // asyncData方法中包含异步数据请求
         let asyncData = this.$options.asyncData;
 

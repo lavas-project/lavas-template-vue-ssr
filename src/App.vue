@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style lang="stylus">
-/* csshint-disable */
+
 @import './assets/styles/global'
 
 #app
