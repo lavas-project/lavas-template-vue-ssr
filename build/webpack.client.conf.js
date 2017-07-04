@@ -43,7 +43,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // split vendor js into its own file
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            minChunks: function (module, count) {
+            minChunks(module, count) {
                 // any required modules inside node_modules are extracted to vendor
                 return (
                     module.resource

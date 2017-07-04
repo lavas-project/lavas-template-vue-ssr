@@ -40,7 +40,7 @@ let rAF = function (cb) {
 
 // 兼容服务器端渲染的情况
 if (process.env.VUE_ENV === 'client') {
-    rAF =  window.requestAnimationFrame
+    rAF = window.requestAnimationFrame
         || window.webkitRequestAnimationFrame
         || rAF;
 }
