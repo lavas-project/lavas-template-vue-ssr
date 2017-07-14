@@ -78,7 +78,7 @@ app.use(compression({threshold: 0}));
 app.use(favicon('./static/img/icons/favicon-32x32.png'));
 // app.use('/static', serve('./static', true));
 app.use('/dist', serve('./dist', true));
-app.use('/manifest.json', serve('./manifest.json', true));
+app.use('/manifest.json', serve('./static/manifest.json', true));
 app.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // 1-second microcache.
