@@ -14,7 +14,6 @@ const isDev = process.env.NODE_ENV !== 'production';
 // return a Promise that resolves to the app instance.
 export default function (context) {
     return new Promise((resolve, reject) => {
-        let s = isDev && Date.now();
         let {app, router, store} = createApp();
 
         let url = context.url;
@@ -40,6 +39,7 @@ export default function (context) {
             // A preFetch hook dispatches a store action and returns a Promise,
             // which is resolved when the action is complete and store state has been
             // updated.
+            let s = isDev && Date.now();
             Promise.all(matchedComponents.map(({asyncData}) => asyncData && asyncData({
                 store,
                 route: router.currentRoute
