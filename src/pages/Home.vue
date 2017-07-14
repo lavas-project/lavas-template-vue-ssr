@@ -33,9 +33,6 @@ export default {
     name: 'home',
     async asyncData({store, route}) {
         setState(store);
-        await new Promise((resolve, reject) => {
-            setTimeout(resolve, 500);
-        });
     },
     activated() {
         setState(this.$store);
