@@ -79,7 +79,7 @@ if (process.env.NODE_ENV === 'production') {
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
         new SwRegisterWebpackPlugin({
-            prefix: '/',
+            prefix: '/dist/',
             filePath: path.resolve(__dirname, '../src/sw-register.js')
         })
     ];
