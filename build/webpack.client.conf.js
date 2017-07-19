@@ -54,11 +54,23 @@ let webpackConfig = merge(baseWebpackConfig, {
             /* eslint-enable fecs-use-method-definition */
         }),
 
+        // split vue, vue-router and vuex into vue chunk
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vue',
+            minChunks: function (module, count) {
+                let context = module.context;
+                let targets = ['vue', 'vue-router', 'vuex'];
+                return context
+                    && context.indexOf('node_modules') >= 0
+                    && targets.find(t => new RegExp('/' + t + '/', 'i').test(context));
+            }
+        }),
+
         // extract webpack runtime and module manifest to its own file in order to
         // prevent vendor hash from being updated whenever app bundle is updated
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
-            chunks: ['vendor']
+            chunks: ['vue']
         }),
 
         // copy custom static assets
