@@ -20,7 +20,7 @@ export default function (context) {
 
         const vueMeta = app.$meta();
         context.meta = vueMeta;
-        context.getMeta = context.meta.inject();
+        context.getMeta = app.$meta().inject();
 
         if (fullPath !== url) {
             reject({url: fullPath});
