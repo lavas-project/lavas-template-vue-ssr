@@ -4,7 +4,7 @@
  */
 
 import {createApp} from './app';
-const router = createApp.$router
+const router = createApp.$router;
 const isDev = process.env.NODE_ENV !== 'production';
 
 // This exported function will be called by `bundleRenderer`.
@@ -19,8 +19,8 @@ export default function (context) {
         let url = context.url;
         let fullPath = router.resolve(url).route.fullPath;
 
-        const meta = app.$meta() // here
-        context.meta = meta // and here
+        const meta = app.$meta(); // here
+        context.meta = meta; // and here
 
         if (fullPath !== url) {
             reject({url: fullPath});
@@ -28,7 +28,6 @@ export default function (context) {
 
         // set router's location
         router.push(url);
-        
         // wait until router has resolved possible async hooks
         router.onReady(() => {
             let matchedComponents = router.getMatchedComponents();
