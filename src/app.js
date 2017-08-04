@@ -10,16 +10,12 @@ import {createRouter} from './router';
 import {createStore} from './store';
 import App from './App.vue';
 import Icon from 'vue-awesome/components/Icon.vue';
-/**
- * author: xiaoyang
- * time: 2017-8-04
- */
 Vue.use(Vuetify);
 Vue.use(VueMeta, {
-    keyName: 'head', // the component option name that vue-meta looks for meta info on.
-    attribute: 'data-vue-meta', // the attribute name vue-meta adds to the tags it observes
-    ssrAttribute: 'data-vue-meta-server-rendered', // the attribute name that lets vue-meta know that meta info has already been server-rendered
-    tagIDKeyName: 'vmid' // the property name that vue-meta uses to determine whether to overwrite or append a tag
+    keyName: 'head', // vuemeta的参数名称
+    attribute: 'data-vue-meta', // 由vue-meta渲染的元素会添加一个属性 <title data-vue-meta=""></title>
+    ssrAttribute: 'data-vue-meta-server-rendered', // 由服务器端渲染的vue-meta元素的自定义属性名称
+    tagIDKeyName: 'vmid' // vue-meta用于确定是否覆盖或附加标签的属性名称
 });
 Vue.component('icon', Icon);
 Vue.config.productionTip = false;

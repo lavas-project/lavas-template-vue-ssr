@@ -55,9 +55,7 @@ export default {
         return {
             title: `detail ${this.$route.params.id}`,
             meta: [
-                { charset: 'utf-8' },
                 { name: 'keywords', content: `detail ${this.$route.params.id}` },
-                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
                 { hid: 'description', name: 'description', content: `detail ${this.$route.params.id}` }
             ]
         }
