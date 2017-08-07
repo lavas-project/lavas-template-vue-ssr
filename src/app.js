@@ -10,6 +10,7 @@ import {createRouter} from './router';
 import {createStore} from './store';
 import App from './App.vue';
 import Icon from 'vue-awesome/components/Icon.vue';
+
 Vue.use(Vuetify);
 Vue.use(VueMeta, {
     keyName: 'head', // vuemeta的参数名称
