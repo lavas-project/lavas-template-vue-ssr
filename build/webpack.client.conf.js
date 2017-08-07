@@ -57,7 +57,7 @@ let webpackConfig = merge(baseWebpackConfig, {
         // split vue, vue-router and vuex into vue chunk
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vue',
-            minChunks: function (module, count) {
+            minChunks(module, count) {
                 let context = module.context;
                 let targets = ['vue', 'vue-router', 'vuex'];
                 return context

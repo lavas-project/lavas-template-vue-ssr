@@ -4,7 +4,6 @@
  */
 
 import {createApp} from './app';
-
 const isDev = process.env.NODE_ENV !== 'production';
 
 // This exported function will be called by `bundleRenderer`.
@@ -19,13 +18,16 @@ export default function (context) {
         let url = context.url;
         let fullPath = router.resolve(url).route.fullPath;
 
+        const vueMeta = app.$meta();
+        context.meta = vueMeta;
+        context.getMeta = app.$meta().inject();
+
         if (fullPath !== url) {
             reject({url: fullPath});
         }
 
         // set router's location
         router.push(url);
-
         // wait until router has resolved possible async hooks
         router.onReady(() => {
             let matchedComponents = router.getMatchedComponents();
