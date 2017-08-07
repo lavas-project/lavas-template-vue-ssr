@@ -49,13 +49,6 @@ function setState(store) {
 
 export default {
     name: 'search',
-    head: {
-        title: `lavas-ssr-search`,
-        meta: [
-            { name: 'keywords', content: 'lavas PWA' },
-            { hid: 'description', name: 'description', content: '基于 Vue 的 PWA 解决方案，帮助开发者快速搭建 PWA 应用，解决接入 PWA 的各种问题' }
-        ]
-    },
     data() {
         return {
             query: '',

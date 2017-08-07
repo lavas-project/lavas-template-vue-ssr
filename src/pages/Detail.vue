@@ -51,15 +51,6 @@ function setState(store) {
 
 export default {
     name: 'detail',
-    head () {
-        return {
-            title: `detail ${this.$route.params.id}`,
-            meta: [
-                { name: 'keywords', content: `detail ${this.$route.params.id}` },
-                { hid: 'description', name: 'description', content: `detail ${this.$route.params.id}` }
-            ]
-        }
-    },
     async asyncData({store, route}) {
         setState(store);
         await new Promise((resolve, reject) => {
