@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const lurCache = require('lru-cache');
+const lruCache = require('lru-cache');
 const express = require('express');
 const favicon = require('serve-favicon');
 const compression = require('compression');
@@ -30,7 +30,7 @@ function createRenderer(bundle, options) {
         template,
 
         // for component caching
-        cache: lurCache({
+        cache: lruCache({
             max: 1000,
             maxAge: 1000 * 60 * 15
         }),
@@ -83,7 +83,7 @@ app.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // 1-second microcache.
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
-let microCache = lurCache({
+let microCache = lruCache({
     max: 100,
     maxAge: 1000
 });
