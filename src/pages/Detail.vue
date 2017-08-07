@@ -51,14 +51,15 @@ function setState(store) {
 
 export default {
     name: 'detail',
-    head () {
+    head() {
         return {
-            title: `detail ${this.$route.params.id}`,
+            title: `Detail ${this.$route.params.id}`,
+            titleTemplate: '%s - Lavas',
             meta: [
-                { name: 'keywords', content: `detail ${this.$route.params.id}` },
-                { hid: 'description', name: 'description', content: `detail ${this.$route.params.id}` }
+                {name: 'keywords', content: `detail ${this.$route.params.id}`},
+                {name: 'description', content: `detail ${this.$route.params.id}`}
             ]
-        }
+        };
     },
     async asyncData({store, route}) {
         setState(store);

@@ -18,9 +18,7 @@ export default function (context) {
         let url = context.url;
         let fullPath = router.resolve(url).route.fullPath;
 
-        const vueMeta = app.$meta();
-        context.meta = vueMeta;
-        context.getMeta = app.$meta().inject();
+        context.meta = app.$meta();
 
         if (fullPath !== url) {
             reject({url: fullPath});
