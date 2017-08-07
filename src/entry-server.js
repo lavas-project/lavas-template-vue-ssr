@@ -19,8 +19,6 @@ export default function (context) {
         let url = context.url;
         let fullPath = router.resolve(url).route.fullPath;
 
-        context.meta = app.$meta();
-
         if (fullPath !== url) {
             reject({url: fullPath});
         }
